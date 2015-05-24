@@ -91,16 +91,46 @@ To build the native code the autotools stack is required:
 ## Mac OS X Notes
 
 Mac OS X is the preferred environment for building Humble Video because it allows you
-to build all supported environments (Mac, Linux and Darwin) if you install Oracle's
-VirtualBox software and the excellent [Vagrant](http://vagrantup.com) program.
+to not only build for Mac, but all othersupported environments like Linux and Darwin (if you install Oracle's
+VirtualBox software and the excellent [Vagrant](http://vagrantup.com) program).
 
-You must install the JDK on your mac, and also Apple's xCode developer tools.
+You must install the JDK on your mac, and also Apple's xCode developer tools. Do note that there are some problems to compile it on Xcode 6.3. So please install Xcode 6.1.1 instead.
 
-The 'brew' utility is your on Mac OS X friend. Use it often. You can install yasm using that.
+#### Step 1
+Download and install Xcode 6.1.1 and Command-line Tools for Xcode 6.1.1  https://developer.apple.com/downloads/index.action?name=Xcode
+
+#### Step 2: Install dependencies using  ```homebrew```
 
     brew install pkg-config
     brew install yasm
     brew install valgrind
+
+#### Step 3: Download humble-video and run ```mvn install```
+
+If success, you will see:
+
+```
+[INFO] humble-video-parent ................................ SUCCESS [  0.323 s]
+[INFO] humble-video-captive ............................... SUCCESS [37:11 min]
+[INFO] humble-video-native ................................ SUCCESS [03:46 min]
+[INFO] humble-video-noarch ................................ SUCCESS [01:29 min]
+[INFO] humble-video-test .................................. SUCCESS [01:56 min]
+[INFO] video_demos ........................................ SUCCESS [01:14 min]
+[INFO] humble-video-superproject .......................... SUCCESS [  0.004 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 45:38 min
+```
+
+Otherwise if ```Crypto "No rule to make target `all'"```, run step 4
+
+#### Step 4: Fix openssl/crypto compile error
+1. download and unzip http://www.openssl.org/source/openssl-1.0.1j.tar.gz to openssl-1.0.1j/
+2. replace humble-video/humble-video-captive/src/main/gnu/openssl/csrc/* with openssl-1.0.1j/
+3. clean the previous build with (cd humble-video-stage && mvn clean) && mvn clean
+3. run mvn install again
+
 
 Also, on Mac OS X the Valgrind test suite only works for 64-bit builds.
 
