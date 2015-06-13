@@ -103,7 +103,7 @@ Download and install Xcode 6.1.1 and Command-line Tools for Xcode 6.1.1  https:/
 
     brew install pkg-config
     brew install yasm
-    brew install valgrind
+    brew install --HEAD valgrind
 
 #### Step 3: Download humble-video and run ```mvn install```
 
